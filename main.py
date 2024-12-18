@@ -2,17 +2,15 @@ import pygame
 import os
 import sys
 from ui.menu import main_menu
-from levels.level_one import level_one
-from leaderboard import *
-import gameTimer
+#from levels.level_one import level_one
 
 # Initialize Pygame
 pygame.init()
 
 # Set Window Icon
-icon_path = os.path.join("assets", "logo32x32.png")
-icon = pygame.image.load(icon_path)
-pygame.display.set_icon(icon)
+# icon_path = os.path.join("assets", "logo32x32.png")
+# icon = pygame.image.load(icon_path)
+# ygame.display.set_icon(icon)
 
 # Set the screen dimensions and caption
 SCREEN = pygame.display.set_mode((1280, 720))

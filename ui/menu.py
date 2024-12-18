@@ -40,7 +40,7 @@ def main_menu(SCREEN):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if PLAY_BUTTON.checkForInput(mouseMenuPOS):
                 level_one(SCREEN)
-            elif OPTIONS_BUTTON.checkForInput(mouseMenuPOS):
+            if OPTIONS_BUTTON.checkForInput(mouseMenuPOS):
                 print("Options button clicked!")  # Replace with options screen
             elif QUIT_BUTTON.checkForInput(mouseMenuPOS):
                 pygame.quit()
