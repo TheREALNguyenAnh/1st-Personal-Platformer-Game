@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.math.Vector2(0, 0)
         self.speed = 5
         self.gravity = 0.5
-        self.jump_power = 100
+        self.jump_power = -15  # Use negative for upward jump
         self.is_jumping = False
         self.is_running = False
 
@@ -54,10 +54,22 @@ class Player(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         self.velocity.y += self.gravity
-        if self.rect.bottom >= 720:  # Assuming the ground is at the bottom of the screen
-            self.rect.bottom = 720
-            self.velocity.y = 0
-            self.is_jumping = False
+
+    def handle_collision(self, terrain_group):
+        """Handle collisions with terrain."""
+        for block in terrain_group:
+            if self.rect.colliderect(block.rect):
+                # Handle collision while falling
+                if self.velocity.y > 0 and self.rect.bottom <= block.rect.top + self.velocity.y:
+                    self.rect.bottom = block.rect.top
+                    self.velocity.y = 0
+                    self.is_jumping = False
+
+                # Handle collision while moving sideways
+                elif self.velocity.x > 0 and self.rect.right >= block.rect.left:
+                    self.rect.right = block.rect.left
+                elif self.velocity.x < 0 and self.rect.left <= block.rect.right:
+                    self.rect.left = block.rect.right
 
     def animate(self):
         # Determine the current animation based on the player's state
@@ -75,9 +87,10 @@ class Player(pygame.sprite.Sprite):
             self.current_frame = (self.current_frame + 1) % len(self.animations[self.current_animation])
         self.image = self.animations[self.current_animation][self.current_frame]
 
-    def update(self):
+    def update(self, terrain_group):
         self.handle_keys()
         self.apply_gravity()
+        self.handle_collision(terrain_group)
         self.animate()
         self.rect.x += self.velocity.x
         self.rect.y += self.velocity.y
