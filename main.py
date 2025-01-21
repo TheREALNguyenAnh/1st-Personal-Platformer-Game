@@ -13,7 +13,7 @@ pygame.init()
 # ygame.display.set_icon(icon)
 
 # Set the screen dimensions and caption
-SCREEN = pygame.display.set_mode((1280, 720))
+SCREEN = pygame.display.set_mode((1296, 720))
 pygame.display.set_caption("Puzzle Platformer")
 
 # Define desired frames per second (FPS)
